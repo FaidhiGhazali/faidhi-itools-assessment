@@ -4,16 +4,38 @@
     show-if-above
     bordered
   >
-    <q-scroll-area class="fit">
-      <q-list>
-        <template v-for="(menuItem, index) in menuList" :key="index">
+    <div class="column fit">
+      <!-- Top menu (Home, About, Contact Us) -->
+      <q-scroll-area class="col">
+        <q-list>
+          <template v-for="(menuItem, index) in topMenu" :key="index">
+            <q-item
+              clickable
+              v-ripple
+              :active="isActive(menuItem.route)"
+              :to="!menuItem.action ? menuItem.route : undefined"
+              @click="menuItem.action ? menuItem.action() : null"
+            >
+              <q-item-section avatar>
+                <q-icon :name="menuItem.icon" />
+              </q-item-section>
+              <q-item-section>
+                {{ menuItem.label }}
+              </q-item-section>
+            </q-item>
+            <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+          </template>
+        </q-list>
+      </q-scroll-area>
+
+      <q-list class="q-mt-auto">
+        <template v-for="(menuItem, index) in bottomMenu" :key="'bottom' + index">
+          <q-separator v-if="menuItem.separator" />
           <q-item
             clickable
             v-ripple
-            :active="isActive(menuItem.route)"
-            :to="!menuItem.action ? menuItem.route : undefined"
             @click="menuItem.action ? menuItem.action() : null"
-            >
+          >
             <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
             </q-item-section>
@@ -21,12 +43,10 @@
               {{ menuItem.label }}
             </q-item-section>
           </q-item>
-          <q-separator :key="'sep' + index" v-if="menuItem.separator" />
         </template>
       </q-list>
-    </q-scroll-area>
+    </div>
   </q-drawer>
-
 </template>
 
 <script setup>
@@ -42,6 +62,9 @@ const leftDrawerOpen = ref(false);
 
 // Function to determine if a route is active (for highlighting menu item)
 const isActive = (path) => computed(() => route.path === path).value;
+
+const topMenu = computed(() => menuList.filter(item => !item.bottom));
+const bottomMenu = computed(() => menuList.filter(item => item.bottom));
 
 // Define menu items for the drawer
 const menuList = [
@@ -66,6 +89,7 @@ const menuList = [
     icon: 'logout',
     label: 'Logout',
     separator: true,
+    bottom: true,
     action: () => onLogout() // Call logout function when clicked
   }
 ];
