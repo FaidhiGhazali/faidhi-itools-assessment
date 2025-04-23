@@ -8,11 +8,13 @@ export const useConfigStore = defineStore('config', {
     apiBaseUrl: '/api/v1/secure/', // Base URL for API set inside quasar.config.js
     token: localStorage.getItem('token') || null, // Token stored in localStorage for persistence
     tokenExpiry: localStorage.getItem('tokenExpiry') || null, // Token expiry stored in localStorage for persistence
-    loading: false  // Global loading state for API calls
+    loading: false,  // Global loading state for API calls
+    role: localStorage.getItem('roles') || null, // Get user roles
   }),
 
   getters: {
     isAuthenticated: (state) => !!state.token, // Used to protect routes, true if token exists
+    userRole: (state) => state.role, // Getter to access the role
   },
 
   actions: {
@@ -33,14 +35,17 @@ export const useConfigStore = defineStore('config', {
 
         const tokenData = response.data?.data?.token;
         const userData = response.data?.data?.profile.personal;
+        const userRole = response.data?.data?.profile?.current_active_organization.roles[0] || 'staff';
 
          // Store token if exists in response
         if (tokenData?.access_token) {
           this.token = tokenData.access_token;
           this.tokenExpiry = tokenData.expires_at || null;
+          this.role = userRole;
 
-          localStorage.setItem('token', tokenData.access_token);
-          localStorage.setItem('tokenExpiry', tokenData.expires_at);
+          localStorage.setItem('token', tokenData.access_token); // Save tokenData in localStorage
+          localStorage.setItem('tokenExpiry', tokenData.expires_at); // Save tokenExpiry in localStorage
+          localStorage.setItem('role', userRole); // Save role in localStorage
 
           // Store user name for UI header
           if (userData?.fullname) {

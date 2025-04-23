@@ -30,6 +30,10 @@ export default defineRouter(function () {
         next('/login');// Go to login page
       }
     }
+    // Role-based access control
+    else if (to.meta && to.meta.requiresRole && configStore.userRole !== to.meta.requiresRole) {
+      next('/'); // Redirect if user does not have required role
+    }
     // Otherwise, allow the navigation
     else {
       next();

@@ -63,7 +63,13 @@ const leftDrawerOpen = ref(false);
 // Function to determine if a route is active (for highlighting menu item)
 const isActive = (path) => computed(() => route.path === path).value;
 
-const topMenu = computed(() => menuList.filter(item => !item.bottom));
+// Show Admin tab only with user role admin. Current user is staff roles only
+const topMenu = computed(() =>
+  menuList.filter(item => {
+    if (item.label === 'Admin' && configStore.userRole !== 'admin') return false;
+    return !item.bottom;
+  })
+);
 const bottomMenu = computed(() => menuList.filter(item => item.bottom));
 
 // Define menu items for the drawer
@@ -84,6 +90,11 @@ const menuList = [
     icon: 'call',
     label: 'Contact',
     route: '/contact',
+  },
+  {
+    icon: 'people',
+    label: 'Admin',
+    route: '/admin',
   },
   {
     icon: 'logout',

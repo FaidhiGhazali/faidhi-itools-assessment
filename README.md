@@ -11,7 +11,7 @@ This is a Vue 3 application using Quasar that demonstrates user authentication, 
 - Logout functionality
 - Protected routes and auto redirect on token expiry
 - Loading states and friendly error handling
-- Pages like Home/About/Contact are placeholder routes to demonstrate router setup
+- Pages like Home, About, Contact and Admin are placeholder routes to demonstrate router setup. Admin page can be access with user roles admin only
 - Added test script for login and API request
 ```
 

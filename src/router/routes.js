@@ -7,6 +7,8 @@ const routes = [
       { path: '', component: () => import('pages/HomePage.vue') }, // This is the default child route (example: when user visits "/")
       { path: 'about', component: () => import('pages/AboutPage.vue') }, // Render About when user choose from left panel
       { path: 'contact', component: () => import('pages/ContactUs.vue') },// Render ContactUs when user choose from left panel
+      { path: 'admin', component: () => import('pages/AdminPage.vue'), meta: { requiresAuth: true, requiresRole: 'admin' } }, // Render Admin based on roles
+
     ]
   },
   {
