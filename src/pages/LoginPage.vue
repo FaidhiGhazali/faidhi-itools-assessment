@@ -10,6 +10,7 @@
             <div class="text-h6 q-mt-sm">Login</div>
           </q-card-section>
 
+          <!-- Login form section -->
           <q-card-section>
             <q-form @submit="onLogin" :disable="configStore.loading">
               <q-input
@@ -93,26 +94,28 @@ const errorMessage = ref("");
 const errorDialog = ref(false);
 const forgotDialog = ref(false);
 const forgotMessage = ref("");
+const configStore = useConfigStore(); // Accessing the Pinia store for authentication
 
-
-const configStore = useConfigStore();
-
+// Function to handle login form submission
 const onLogin = async () => {
-  errorMessage.value = "";
-  configStore.loading = true;
+  errorMessage.value = ""; // Clear previous error
+  configStore.loading = true; // Set loading state
 
+  // Call login method from store
   const result = await configStore.login(username.value, password.value);
 
   if (result.success) {
-    router.replace("/");
+    router.replace("/"); // Redirect to home page if is successful
   } else {
+     // Show error dialog with message
     errorMessage.value = result.message || "Login failed. Please check your credentials.";
     errorDialog.value = true;
   }
 
-  configStore.loading = false;
+  configStore.loading = false; // Reset loading state
 };
 
+// Function to trigger forgot password dialog
 const forgotPassword = () => {
   forgotMessage.value = "Reset password link sent!"
   forgotDialog.value = true

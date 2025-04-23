@@ -40,8 +40,10 @@ const configStore = useConfigStore();
 
 const leftDrawerOpen = ref(false);
 
+// Function to determine if a route is active (for highlighting menu item)
 const isActive = (path) => computed(() => route.path === path).value;
 
+// Define menu items for the drawer
 const menuList = [
   {
     icon: 'house',
@@ -64,12 +66,13 @@ const menuList = [
     icon: 'logout',
     label: 'Logout',
     separator: true,
-    action: () => onLogout()
+    action: () => onLogout() // Call logout function when clicked
   }
 ];
 
+// Logout function
 const onLogout = () => {
-  configStore.logout();
-  router.replace('/login');
+  configStore.logout(); // Clear auth state from store
+  router.replace('/login'); // Redirect to login page
 };
 </script>
