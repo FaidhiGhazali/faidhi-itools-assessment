@@ -12,6 +12,7 @@ This is a Vue 3 application using Quasar that demonstrates user authentication, 
 - Protected routes and auto redirect on token expiry
 - Loading states and friendly error handling
 - Pages like Home/About/Contact are placeholder routes to demonstrate router setup
+- Added test script for login and API request
 ```
 
 ## Code Documentation
@@ -21,7 +22,7 @@ Added detailed comments explaining each key feature and logic block within the c
 
 ## Clone project repo
 ```
-git clone
+git clone https://github.com/FaidhiGhazali/faidhi-itools-assessment.git
 ```
 
 ## Install the dependencies
