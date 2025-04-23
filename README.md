@@ -1,6 +1,6 @@
 # Interview Assessement (faidhi-project)
 
-This is a Vue 3 application that demonstrates user authentication, theme toggling, and protected routing using the Composition API, Pinia, and Axios.
+This is a Vue 3 application using Quasar that demonstrates user authentication, theme toggling, and protected routing using the Composition API, Pinia, and Axios.
 
 ## Features
 ```
