@@ -82,7 +82,7 @@ const menuList = [
   },
   {
     icon: 'call',
-    label: 'Contact Us',
+    label: 'Contact',
     route: '/contact',
   },
   {

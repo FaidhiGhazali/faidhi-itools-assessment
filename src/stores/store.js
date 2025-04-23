@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useThemeStore } from '../stores/theme'
 import axios from 'axios'
 import { API_HEADERS } from '../config/apiKeys' // Import API headers used in all authenticated requests
 
@@ -67,12 +66,10 @@ export const useConfigStore = defineStore('config', {
 
     // Clear token and reset theme on logout
     logout() {
-      const themeStore = useThemeStore()
       this.token = null
       localStorage.removeItem('token')
       localStorage.removeItem('tokenExpiry')
       delete axios.defaults.headers.common['Authorization']
-      themeStore.setDarkMode(false) // Set dark mode false at login
     },
 
     // To attach token and custom headers to all Axios requests
