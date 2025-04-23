@@ -2,14 +2,19 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { API_HEADERS } from '../config/apiKeys' // Import API headers used in all authenticated requests
 
+// Clear token at start
+localStorage.removeItem('token');
+localStorage.removeItem('tokenExpiry');
+localStorage.removeItem('role');
+
 // Authentication and config store
 export const useConfigStore = defineStore('config', {
   state: () => ({
     apiBaseUrl: '/api/v1/secure/', // Base URL for API set inside quasar.config.js
-    token: localStorage.getItem('token') || null, // Token stored in localStorage for persistence
-    tokenExpiry: localStorage.getItem('tokenExpiry') || null, // Token expiry stored in localStorage for persistence
+    token: null, // Initialize token as null on app start
+    tokenExpiry: null, // Initialize tokenExpiry as null on app start
     loading: false,  // Global loading state for API calls
-    role: localStorage.getItem('roles') || null, // Get user roles
+    role: null,
   }),
 
   getters: {

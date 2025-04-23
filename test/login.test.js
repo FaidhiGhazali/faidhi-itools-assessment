@@ -25,22 +25,24 @@ describe('Config Store (No Refresh Token)', () => {
 
   // Test login functionality to simulates a successful login and sets the token + expiry
   it('Handles login and sets token + expiry', async () => {
-    const mockResponse = {
+
+    // Simulate a successful login API response
+    mock.onPost('/api/v1/secure/login').reply(200, {
       data: {
         token: {
-          access_token: 'mockAccessToken', // Simulated access token
+          access_token: 'mockAccessToken',
           expires_at: Math.floor(Date.now() / 1000) + 3600
         },
         profile: {
           personal: {
-            fullname: 'John Doe' // Simulated user profile
+            fullname: 'John Doe'
+          },
+          current_active_organization: {
+            roles: ['admin']
           }
         }
       }
-    }
-
-    // Simulate a successful login API response
-    mock.onPost('/api/v1/secure/login').reply(200, mockResponse)
+    });
 
     // Call login action from the store
     const result = await configStore.login('test@email.com', 'password123')
